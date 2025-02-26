@@ -3,477 +3,879 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Educación Conectada | 56 Casos de Uso</title>
+  <title>IA Generativa en Educación</title>
   <style>
     :root {
-      --color-primary: #4285F4;
-      --color-secondary: #34A853;
-      --color-accent: #FBBC05;
-      --color-background: #f8f9fa;
-      --color-text: #202124;
-      --color-light: #ffffff;
-      --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      --primary-color: #6366f1;
+      --secondary-color: #4f46e5;
+      --accent-color: #818cf8;
+      --text-color: #1f2937;
+      --light-bg: #f9fafb;
+      --white: #ffffff;
+      --dark-bg: #111827;
+      --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
     
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
     
     body {
-      font-family: var(--font-main);
-      background-color: var(--color-background);
-      color: var(--color-text);
+      background-color: var(--light-bg);
+      color: var(--text-color);
       line-height: 1.6;
     }
     
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem;
+      padding: 0 20px;
     }
     
     header {
+      background-color: var(--primary-color);
+      background-image: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: var(--white);
+      padding: 80px 0;
       text-align: center;
-      padding: 3rem 0;
-      background-color: var(--color-primary);
-      color: var(--color-light);
     }
     
     h1 {
-      font-size: 2.5rem;
+      font-size: 3.5rem;
+      font-weight: 800;
       margin-bottom: 1rem;
     }
     
-    h2 {
-      font-size: 2rem;
-      color: var(--color-primary);
-      margin: 2rem 0 1rem;
-    }
-    
-    h3 {
+    .subtitle {
       font-size: 1.5rem;
-      color: var(--color-secondary);
-      margin: 1.5rem 0 0.5rem;
-    }
-    
-    p {
-      margin-bottom: 1rem;
-    }
-    
-    .intro {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto 3rem;
-    }
-    
-    .category {
-      background-color: var(--color-light);
-      border-radius: 10px;
-      padding: 2rem;
+      font-weight: 400;
       margin-bottom: 2rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      opacity: 0.9;
     }
     
-    .use-cases {
+    .btn {
+      display: inline-block;
+      background-color: var(--white);
+      color: var(--primary-color);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin: 0 10px;
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--card-shadow);
+    }
+    
+    .btn-secondary {
+      background-color: transparent;
+      border: 2px solid var(--white);
+      color: var(--white);
+    }
+    
+    .section {
+      padding: 80px 0;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 4rem auto;
+      opacity: 0.8;
+    }
+    
+    .cards-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
+      gap: 30px;
     }
     
-    .use-case {
-      background-color: #f0f4f9;
+    .card {
+      background-color: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background-color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 5rem;
+    }
+    
+    .card-content {
+      padding: 20px;
+    }
+    
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    
+    .card-text {
+      opacity: 0.8;
+      margin-bottom: 15px;
+    }
+    
+    .card-link {
+      display: inline-block;
+      color: var(--primary-color);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    
+    .cta-section {
+      background-color: var(--dark-bg);
+      color: var(--white);
+      text-align: center;
+      padding: 100px 0;
+    }
+    
+    .cta-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    
+    .cta-text {
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    
+    .about-section {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 40px;
+    }
+    
+    .about-content {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .about-image {
+      flex: 1;
+      min-width: 300px;
+      height: 400px;
+      background-color: var(--accent-color);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      color: var(--white);
+    }
+    
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      width: 4px;
+      background-color: var(--accent-color);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -2px;
+    }
+    
+    .timeline-item {
+      padding: 10px 40px;
+      position: relative;
+      width: 50%;
+      margin-bottom: 30px;
+    }
+    
+    .timeline-item:nth-child(odd) {
+      left: 0;
+    }
+    
+    .timeline-item:nth-child(even) {
+      left: 50%;
+    }
+    
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: var(--white);
+      border: 4px solid var(--primary-color);
+      border-radius: 50%;
+      top: 15px;
+      right: -12px;
+      z-index: 1;
+    }
+    
+    .timeline-item:nth-child(even)::after {
+      left: -12px;
+    }
+    
+    .timeline-content {
+      padding: 20px;
+      background-color: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .timeline-year {
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .faq-item {
+      margin-bottom: 20px;
+      background-color: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .faq-question {
+      padding: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .faq-question::after {
+      content: '+';
+      font-size: 1.5rem;
+    }
+    
+    .faq-answer {
+      padding: 0 20px 20px;
+      display: none;
+    }
+    
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+    
+    .faq-item.active .faq-question::after {
+      content: '-';
+    }
+    
+    .testimonial-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .testimonial {
+      background-color: var(--white);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: var(--card-shadow);
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--accent-color);
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 700;
+    }
+    
+    .author-info h4 {
+      margin: 0;
+      font-weight: 600;
+    }
+    
+    .author-info p {
+      margin: 0;
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+    
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #e2e8f0;
       border-radius: 8px;
-      padding: 1.5rem;
-      border-left: 4px solid var(--color-accent);
+      font-size: 1rem;
     }
     
-    .use-case h4 {
-      color: var(--color-primary);
-      margin-bottom: 0.5rem;
+    .form-textarea {
+      height: 150px;
+      resize: vertical;
+    }
+    
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      padding: 15px 0;
+    }
+    
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-link {
+      margin-left: 30px;
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: var(--primary-color);
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-color);
+    }
+    
+    .hero-section {
+      padding-top: 80px;
     }
     
     footer {
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 40px 0;
       text-align: center;
-      padding: 2rem 0;
-      margin-top: 3rem;
-      background-color: var(--color-primary);
-      color: var(--color-light);
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    
+    .footer-link {
+      color: var(--white);
+      margin: 0 15px;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+    
+    .footer-link:hover {
+      opacity: 1;
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--white);
+      margin: 0 10px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background-color: rgba(255, 255, 255, 0.2);
     }
     
     @media (max-width: 768px) {
-      .container {
-        padding: 1rem;
+      h1 {
+        font-size: 2.5rem;
       }
       
-      h1 {
+      .subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .section-title {
         font-size: 2rem;
       }
       
-      h2 {
-        font-size: 1.7rem;
+      .cta-title {
+        font-size: 2rem;
       }
       
-      h3 {
-        font-size: 1.3rem;
+      .timeline::before {
+        left: 30px;
       }
       
-      .use-cases {
-        grid-template-columns: 1fr;
+      .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 20px;
+      }
+      
+      .timeline-item:nth-child(even) {
+        left: 0;
+      }
+      
+      .timeline-item::after {
+        left: 20px;
+        right: auto;
+      }
+      
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--white);
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+      
+      .nav-link {
+        margin: 10px 0;
+      }
+      
+      .subscribe-form {
+        flex-direction: column;
+      }
+      
+      .subscribe-input {
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+      
+      .subscribe-btn {
+        border-radius: 8px;
       }
     }
   </style>
 </head>
 <body>
-  <header>
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <a href="#" class="logo">IA Educativa</a>
+      <button class="mobile-menu-btn">☰</button>
+      <ul class="nav-links">
+        <li><a href="#inicio" class="nav-link">Inicio</a></li>
+        <li><a href="#sobre-nosotros" class="nav-link">Sobre Nosotros</a></li>
+        <li><a href="#casos-uso" class="nav-link">Casos de Uso</a></li>
+        <li><a href="#recursos" class="nav-link">Recursos</a></li>
+        <li><a href="#testimonios" class="nav-link">Testimonios</a></li>
+        <li><a href="#faq" class="nav-link">FAQ</a></li>
+        <li><a href="#contacto" class="nav-link">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header id="inicio" class="hero-section">
     <div class="container">
-      <h1>Educación Conectada</h1>
-      <p>56 casos de uso reales que transforman la educación mediante la tecnología</p>
+      <h1>IA Generativa en Educación</h1>
+      <p class="subtitle">Transformando el aprendizaje con inteligencia artificial</p>
+      <div>
+        <a href="#casos-uso" class="btn">Ver casos de uso</a>
+        <a href="#recursos" class="btn btn-secondary">Recursos</a>
+      </div>
     </div>
   </header>
-  
-  <main class="container">
-    <section class="intro">
-      <h2>Transformando la Educación</h2>
-      <p>En un mundo cada vez más digital, la educación conectada está revolucionando la forma en que enseñamos y aprendemos. A continuación, presentamos 56 casos de uso reales que demuestran el impacto transformador de la tecnología en el ámbito educativo.</p>
-    </section>
-    
-    <section class="category">
-      <h2>Gestión del Aprendizaje</h2>
-      <p>Optimiza procesos y seguimiento del desarrollo académico para mejorar los resultados educativos.</p>
-      
-      <div class="use-cases">
-        <div class="use-case">
-          <h4>Sistema de Gestión del Aprendizaje (LMS)</h4>
-          <p>Plataformas como Canvas, Moodle o Google Classroom que integran recursos, tareas y evaluaciones en un solo espacio virtual.</p>
+
+  <section id="sobre-nosotros" class="section">
+    <div class="container">
+      <h2 class="section-title">Sobre la IA Generativa en Educación</h2>
+      <div class="about-section">
+        <div class="about-content">
+          <p>La Inteligencia Artificial Generativa está revolucionando el sector educativo, ofreciendo nuevas oportunidades para personalizar el aprendizaje, automatizar tareas administrativas y crear experiencias educativas más atractivas e interactivas.</p>
+          <p>Esta tecnología permite a docentes, estudiantes e instituciones educativas acceder a herramientas que antes eran inimaginables, como tutores virtuales disponibles 24/7, contenido adaptativo que responde a las necesidades individuales de cada estudiante, y sistemas capaces de proporcionar retroalimentación instantánea y detallada.</p>
+          <p>Desde la educación primaria hasta la formación profesional y universitaria, la IA generativa está cambiando fundamentalmente la forma en que enseñamos y aprendemos, democratizando el acceso a educación de calidad y preparando a los estudiantes para un futuro donde la colaboración con sistemas inteligentes será parte del día a día.</p>
         </div>
-        
-        <div class="use-case">
-          <h4>Seguimiento de Progreso Académico</h4>
-          <p>Herramientas que permiten a docentes y estudiantes visualizar el avance en competencias y objetivos de aprendizaje en tiempo real.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Portafolios Digitales</h4>
-          <p>Espacios donde los estudiantes pueden recopilar, organizar y presentar sus trabajos y logros más significativos durante su trayectoria educativa.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Análisis Predictivo del Rendimiento</h4>
-          <p>Sistemas que identifican patrones y predicen posibles dificultades académicas para intervenir tempranamente.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Gestión de Asistencia Digital</h4>
-          <p>Aplicaciones que automatizan el registro de asistencia y generan reportes para seguimiento de patrones de ausentismo.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Planificación Curricular Colaborativa</h4>
-          <p>Plataformas donde equipos docentes pueden diseñar, compartir y mejorar planes de estudio y secuencias didácticas.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Rúbricas Digitales</h4>
-          <p>Herramientas para crear y aplicar matrices de evaluación que facilitan la retroalimentación específica y transparente.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Agendas y Calendarios Académicos</h4>
-          <p>Sistemas de organización temporal que sincronizan fechas importantes, entregas y actividades para toda la comunidad educativa.</p>
+        <div class="about-image">
+          🧠
         </div>
       </div>
-    </section>
-    
-    <section class="category">
-      <h2>Experiencia de Aprendizaje</h2>
-      <p>Mejora la participación y efectividad del proceso educativo mediante recursos interactivos y personalizados.</p>
-      
-      <div class="use-cases">
-        <div class="use-case">
-          <h4>Realidad Aumentada Educativa</h4>
-          <p>Aplicaciones que superponen información digital sobre el mundo real para explorar conceptos abstractos como anatomía, astronomía o historia.</p>
+    </div>
+  </section>
+
+  <section class="section" style="background-color: #f3f4f6;">
+    <div class="container">
+      <h2 class="section-title">Evolución de la IA en Educación</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-year">2010</div>
+            <h3>Primeros tutores adaptativos</h3>
+            <p>Sistemas básicos de recomendación de contenido educativo basados en el desempeño del estudiante.</p>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Laboratorios Virtuales</h4>
-          <p>Entornos simulados donde los estudiantes pueden realizar experimentos científicos sin riesgos ni limitaciones de recursos físicos.</p>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-year">2015</div>
+            <h3>Aprendizaje automático en educación</h3>
+            <p>Integración de algoritmos de machine learning para analizar patrones de aprendizaje y predecir áreas de dificultad.</p>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Aprendizaje Adaptativo</h4>
-          <p>Plataformas que ajustan automáticamente el contenido y nivel de dificultad según el desempeño y necesidades específicas de cada estudiante.</p>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-year">2020</div>
+            <h3>GPT-3 y modelos de lenguaje avanzados</h3>
+            <p>Surgimiento de modelos capaces de generar contenido educativo coherente y contextualmente relevante.</p>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Aprendizaje Basado en Juegos</h4>
-          <p>Incorporación de elementos lúdicos y de gamificación para incrementar la motivación y el compromiso con el aprendizaje.</p>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-year">2023</div>
+            <h3>Asistentes IA multimodales</h3>
+            <p>Sistemas educativos que combinan comprensión de texto, imágenes y voz para crear experiencias de aprendizaje inmersivas.</p>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Mapas Conceptuales Interactivos</h4>
-          <p>Herramientas digitales para crear representaciones visuales de relaciones entre conceptos que pueden expandirse y conectarse dinámicamente.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Tutores Virtuales con IA</h4>
-          <p>Asistentes inteligentes que proporcionan ayuda personalizada, resuelven dudas y ofrecen retroalimentación inmediata fuera del horario escolar.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Podcasts Educativos</h4>
-          <p>Contenido auditivo diseñado específicamente para reforzar aprendizajes o explorar temas relevantes en formato accesible.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Evaluación Formativa Digital</h4>
-          <p>Herramientas que permiten evaluar continuamente el aprendizaje mediante actividades interactivas que proporcionan datos inmediatos.</p>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-year">2025</div>
+            <h3>Personalización total del aprendizaje</h3>
+            <p>Ecosistemas educativos inteligentes que adaptan completamente el contenido, ritmo y metodología a cada estudiante.</p>
+          </div>
         </div>
       </div>
-    </section>
-    
-    <section class="category">
-      <h2>Acceso a la Educación</h2>
-      <p>Democratiza oportunidades de aprendizaje para poblaciones diversas, superando barreras geográficas y socioeconómicas.</p>
-      
-      <div class="use-cases">
-        <div class="use-case">
-          <h4>MOOCs (Cursos Masivos Abiertos Online)</h4>
-          <p>Plataformas como Coursera, edX o Khan Academy que ofrecen cursos gratuitos o de bajo costo de universidades prestigiosas.</p>
+    </div>
+  </section>
+
+  <section id="casos-uso" class="section">
+    <div class="container">
+      <h2 class="section-title">Casos de Uso</h2>
+      <p class="section-subtitle">Descubre cómo la IA Generativa está revolucionando la educación en diferentes contextos</p>
+      <div class="cards-container">
+        <div class="card">
+          <div class="card-img">
+            <i>📝</i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Creación de materiales didácticos</h3>
+            <p class="card-text">Genera recursos educativos personalizados, adaptados a diferentes estilos de aprendizaje y niveles de conocimiento. Incluye ejercicios, evaluaciones y material complementario.</p>
+            <a href="caso-materiales.html" class="card-link">Leer más →</a>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Aplicaciones Educativas Offline</h4>
-          <p>Apps que funcionan sin conexión continua a internet para contextos con conectividad limitada o intermitente.</p>
+        <div class="card">
+          <div class="card-img">
+            <i>🤖</i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Tutores virtuales personalizados</h3>
+            <p class="card-text">Asistentes de aprendizaje impulsados por IA que ofrecen apoyo 24/7, adaptándose al ritmo y necesidades individuales de cada estudiante.</p>
+            <a href="caso-tutores.html" class="card-link">Leer más →</a>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Repositorios de Recursos Educativos Abiertos</h4>
-          <p>Bibliotecas digitales de materiales educativos con licencias abiertas que pueden ser reutilizados y adaptados libremente.</p>
+        <div class="card">
+          <div class="card-img">
+            <i>🔍</i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Retroalimentación automática</h3>
+            <p class="card-text">Evaluación y comentarios instantáneos sobre trabajos escritos, presentaciones y proyectos, permitiendo a los estudiantes mejorar continuamente.</p>
+            <a href="caso-retroalimentacion.html" class="card-link">Leer más →</a>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Plataformas de Educación Rural</h4>
-          <p>Soluciones diseñadas específicamente para entornos rurales con infraestructura limitada, usando tecnología apropiada para el contexto.</p>
+        <div class="card">
+          <div class="card-img">
+            <i>🎮</i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Gamificación adaptativa</h3>
+            <p class="card-text">Creación de experiencias de aprendizaje gamificadas que se adaptan en tiempo real al desempeño y motivación del estudiante.</p>
+            <a href="caso-gamificacion.html" class="card-link">Leer más →</a>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Educación para Refugiados</h4>
-          <p>Iniciativas tecnológicas que proporcionan continuidad educativa a personas desplazadas por conflictos o desastres.</p>
+        <!-- Nuevos casos de uso -->
+        <div class="card">
+          <div class="card-img">
+            <i>🎨</i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Generación de contenidos multimedia</h3>
+            <p class="card-text">Crea videos, imágenes y presentaciones interactivas que enriquecen el aprendizaje y hacen las clases más dinámicas.</p>
+            <a href="caso-multimedia.html" class="card-link">Leer más →</a>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Subtitulado Automático</h4>
-          <p>Tecnología que genera subtítulos en tiempo real para clases y videos, facilitando el acceso a personas con discapacidad auditiva.</p>
+        <div class="card">
+          <div class="card-img">
+            <i>💬</i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Chatbots de soporte estudiantil</h3>
+            <p class="card-text">Implementa asistentes virtuales que responden consultas, orientan a estudiantes y facilitan la comunicación en tiempo real.</p>
+            <a href="caso-chatbots.html" class="card-link">Leer más →</a>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Programas de Préstamo de Dispositivos</h4>
-          <p>Sistemas para gestionar el préstamo de tablets, laptops o lectores digitales a estudiantes sin acceso a tecnología.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Plataformas de Intercambio Lingüístico</h4>
-          <p>Aplicaciones que conectan estudiantes de diferentes países para practicar idiomas y realizar intercambios culturales virtuales.</p>
-        </div>
-      </div>
-    </section>
-    
-    <section class="category">
-      <h2>Infraestructura Educativa</h2>
-      <p>Fortalece las capacidades tecnológicas de instituciones educativas para soportar innovaciones pedagógicas.</p>
-      
-      <div class="use-cases">
-        <div class="use-case">
-          <h4>Aulas Inteligentes</h4>
-          <p>Espacios educativos equipados con sensores, pantallas interactivas y sistemas automatizados que responden a necesidades pedagógicas.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Redes Wi-Fi Educativas</h4>
-          <p>Infraestructura de conectividad optimizada para entornos escolares con filtros de contenido y priorización del tráfico educativo.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Servidores Educativos Locales</h4>
-          <p>Dispositivos que almacenan recursos educativos y permiten su acceso en redes locales sin necesidad de internet.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Sistemas de Energía Alternativa</h4>
-          <p>Soluciones energéticas sostenibles para mantener la infraestructura tecnológica en zonas con suministro eléctrico inestable.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Bibliotecas Digitales Institucionales</h4>
-          <p>Colecciones de recursos digitales organizados y accesibles para toda la comunidad educativa, incluyendo libros, artículos y multimedia.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Centros de Impresión 3D</h4>
-          <p>Espacios equipados para diseñar y fabricar modelos tridimensionales como apoyo a proyectos educativos en diversas asignaturas.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Plataformas de Videoconferencia Educativa</h4>
-          <p>Sistemas optimizados para clases virtuales con funcionalidades específicas como salas para trabajo en grupo y herramientas de participación.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Sistemas de Control de Acceso</h4>
-          <p>Tecnología para gestionar y monitorear el acceso seguro a instalaciones educativas y recursos tecnológicos.</p>
+        <div class="card">
+          <div class="card-img">
+            <i>🌍</i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Traducción y localización de contenidos</h3>
+            <p class="card-text">Automatiza la traducción de materiales educativos y adapta el contenido a contextos culturales diversos para un aprendizaje globalizado.</p>
+            <a href="caso-traduccion.html" class="card-link">Leer más →</a>
+          </div>
         </div>
       </div>
-    </section>
-    
-    <section class="category">
-      <h2>Gestión Institucional</h2>
-      <p>Optimiza procesos administrativos para que instituciones educativas funcionen con mayor eficiencia y transparencia.</p>
-      
-      <div class="use-cases">
-        <div class="use-case">
-          <h4>Sistemas de Información Estudiantil</h4>
-          <p>Plataformas que centralizan datos académicos, administrativos y de bienestar de los estudiantes a lo largo de su trayectoria educativa.</p>
+    </div>
+  </section>
+
+  <section id="recursos" class="section" style="background-color: #f3f4f6;">
+    <div class="container">
+      <h2 class="section-title">Recursos y Herramientas</h2>
+      <p class="section-subtitle">Explora estas herramientas de IA Generativa diseñadas específicamente para el ámbito educativo</p>
+      <div class="cards-container">
+        <div class="card">
+          <div class="card-img">
+            <i>🧠</i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Asistentes IA para docentes</h3>
+            <p class="card-text">Herramientas que ayudan a los profesores a planificar lecciones, crear evaluaciones y generar material didáctico adaptado a sus necesidades.</p>
+            <a href="recursos-docentes.html" class="card-link">Explorar →</a>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Gestión Digital de Matrículas</h4>
-          <p>Automatización del proceso de inscripción, asignación de cursos y gestión de documentación académica.</p>
+        <div class="card">
+          <div class="card-img">
+            <i>📚</i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Plataformas de aprendizaje online</h3>
+            <p class="card-text">Soluciones que facilitan la gestión de cursos, la interacción virtual y el acceso a contenidos educativos de calidad.</p>
+            <a href="recursos-plataformas.html" class="card-link">Explorar →</a>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Analítica Institucional</h4>
-          <p>Herramientas para analizar datos operativos y académicos que apoyan la toma de decisiones estratégicas en la institución.</p>
+        <div class="card">
+          <div class="card-img">
+            <i>📈</i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Analítica educativa</h3>
+            <p class="card-text">Herramientas que ofrecen seguimiento y análisis del rendimiento estudiantil para optimizar estrategias de enseñanza.</p>
+            <a href="recursos-analitica.html" class="card-link">Explorar →</a>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Gestión de Recursos Humanos Educativos</h4>
-          <p>Sistemas para la administración de personal docente y administrativo, incluyendo desarrollo profesional y evaluación.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Planificación de Recursos Institucionales</h4>
-          <p>Plataformas ERP adaptadas al contexto educativo para gestionar finanzas, inventarios y recursos operativos.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Sistemas de Comunicación Institucional</h4>
-          <p>Canales digitales integrados para mantener informada a toda la comunidad educativa sobre noticias, eventos y decisiones importantes.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Reserva de Espacios y Recursos</h4>
-          <p>Aplicaciones para gestionar el uso de aulas, laboratorios, equipos y otros recursos compartidos dentro de la institución.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Portales de Transparencia Educativa</h4>
-          <p>Plataformas donde se publican indicadores, presupuestos y resultados para fomentar la rendición de cuentas institucional.</p>
-        </div>
-      </div>
-    </section>
-    
-    <section class="category">
-      <h2>Comunidad Educativa</h2>
-      <p>Fortalece vínculos entre todos los actores del proceso educativo para crear ecosistemas de aprendizaje más sólidos.</p>
-      
-      <div class="use-cases">
-        <div class="use-case">
-          <h4>Aplicaciones de Comunicación Familia-Escuela</h4>
-          <p>Plataformas que facilitan la comunicación directa entre docentes y familias sobre el progreso de los estudiantes.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Redes de Colaboración Docente</h4>
-          <p>Espacios virtuales donde educadores comparten experiencias, recursos y mejores prácticas más allá de su institución.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Mentoría Virtual</h4>
-          <p>Programas que conectan estudiantes con mentores profesionales o académicos a través de plataformas en línea.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Comunidades de Aprendizaje en Línea</h4>
-          <p>Grupos temáticos donde estudiantes con intereses similares pueden colaborar y profundizar conocimientos específicos.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Plataformas de Participación Estudiantil</h4>
-          <p>Herramientas que facilitan la voz y participación de los estudiantes en decisiones institucionales y proyectos comunitarios.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Observatorios Educativos Digitales</h4>
-          <p>Espacios que recopilan y analizan tendencias, innovaciones y desafíos educativos para compartirlos con la comunidad.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Programas de Voluntariado Digital</h4>
-          <p>Iniciativas que coordinan apoyo voluntario en tutorías, desarrollo de recursos o apoyo técnico para la comunidad educativa.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Plataformas de Crowdfunding Educativo</h4>
-          <p>Espacios para financiar colectivamente proyectos e iniciativas educativas innovadoras propuestas por la comunidad.</p>
+        <div class="card">
+          <div class="card-img">
+            <i>💻</i>
+          </div>
+          <div class="card-content">
+            <h3 class="card-title">Contenidos interactivos</h3>
+            <p class="card-text">Plataformas que permiten crear y gestionar recursos educativos interactivos y adaptativos para un aprendizaje dinámico.</p>
+            <a href="recursos-interactivos.html" class="card-link">Explorar →</a>
+          </div>
         </div>
       </div>
-    </section>
-    
-    <section class="category">
-      <h2>Investigación e Innovación</h2>
-      <p>Impulsa la generación y aplicación de conocimiento para mejorar continuamente las prácticas educativas.</p>
-      
-      <div class="use-cases">
-        <div class="use-case">
-          <h4>Sistemas de Gestión de Investigación Educativa</h4>
-          <p>Plataformas para administrar proyectos de investigación, desde la propuesta hasta la publicación de resultados.</p>
+    </div>
+  </section>
+
+  <section id="testimonios" class="section">
+    <div class="container">
+      <h2 class="section-title">Testimonios</h2>
+      <p class="section-subtitle">Lo que dicen nuestros usuarios sobre la integración de la IA en la educación</p>
+      <div class="testimonial-container">
+        <div class="testimonial">
+          <p class="testimonial-text">"Gracias a la implementación de estas herramientas, mi aula se ha transformado. La personalización del aprendizaje ha incrementado el interés de mis estudiantes."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">👩‍🏫</div>
+            <div class="author-info">
+              <h4>Profesora Laura Gómez</h4>
+              <p>Instituto Innovar</p>
+            </div>
+          </div>
         </div>
-        
-        <div class="use-case">
-          <h4>Análisis de Datos de Aprendizaje</h4>
-          <p>Herramientas que procesan grandes volúmenes de datos educativos para descubrir patrones y mejorar procesos pedagógicos.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Incubadoras de Innovación Educativa</h4>
-          <p>Espacios virtuales y físicos donde se desarrollan y prueban nuevas soluciones a desafíos educativos.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Repositorios de Investigación Colaborativa</h4>
-          <p>Plataformas donde investigadores comparten datos, metodologías y hallazgos para acelerar avances en educación.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Simulaciones de Enseñanza</h4>
-          <p>Entornos virtuales donde docentes en formación pueden practicar estrategias pedagógicas en escenarios realistas.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Revistas Académicas Digitales</h4>
-          <p>Publicaciones en línea que difunden investigación educativa con procesos de revisión por pares y acceso abierto.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Mapeo de Competencias Emergentes</h4>
-          <p>Sistemas que identifican y catalogan nuevas habilidades requeridas en el mercado laboral para actualizar currículos.</p>
-        </div>
-        
-        <div class="use-case">
-          <h4>Plataformas de Ciencia Ciudadana Educativa</h4>
-          <p>Proyectos que involucran a estudiantes en la recolección y análisis de datos para investigaciones científicas reales.</p>
+        <div class="testimonial">
+          <p class="testimonial-text">"La IA generativa nos ha permitido ofrecer una experiencia educativa única. Los resultados en la participación y desempeño de los alumnos son notables."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">👨‍🎓</div>
+            <div class="author-info">
+              <h4>Estudiante Miguel Sánchez</h4>
+              <p>Universidad Digital</p>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
-  </main>
-  
+    </div>
+  </section>
+
+  <section id="faq" class="section">
+    <div class="container">
+      <h2 class="section-title">Preguntas Frecuentes</h2>
+      <div class="faq-item">
+        <div class="faq-question">¿Qué es la IA Generativa en Educación?</div>
+        <div class="faq-answer">
+          <p>Es la aplicación de algoritmos de inteligencia artificial para crear contenido educativo personalizado, adaptativo y dinámico.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">¿Cómo puede ayudar la IA a los docentes?</div>
+        <div class="faq-answer">
+          <p>La IA puede automatizar tareas administrativas, proporcionar retroalimentación instantánea y ayudar en la creación de recursos didácticos.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">¿Es segura la implementación de estas tecnologías en el aula?</div>
+        <div class="faq-answer">
+          <p>Sí, siempre y cuando se implementen con protocolos de seguridad adecuados y se protejan los datos de los estudiantes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" class="section">
+    <div class="container">
+      <h2 class="section-title">Contacto</h2>
+      <p class="section-subtitle">¿Tienes alguna pregunta o deseas más información? Contáctanos y te responderemos a la brevedad.</p>
+      <div class="contact-form">
+        <form>
+          <div class="form-group">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" class="form-input" placeholder="Tu nombre">
+          </div>
+          <div class="form-group">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" id="email" class="form-input" placeholder="Tu correo">
+          </div>
+          <div class="form-group">
+            <label for="mensaje" class="form-label">Mensaje</label>
+            <textarea id="mensaje" class="form-textarea" placeholder="Escribe tu mensaje"></textarea>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn">Enviar Mensaje</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <div class="container">
-      <p>Carlos Luengo © 2025 | Página web con objetivo de desmostrar casos de uso</p>
+      <div class="footer-links">
+        <a href="#inicio" class="footer-link">Inicio</a>
+        <a href="#sobre-nosotros" class="footer-link">Sobre Nosotros</a>
+        <a href="#casos-uso" class="footer-link">Casos de Uso</a>
+        <a href="#recursos" class="footer-link">Recursos</a>
+        <a href="#testimonios" class="footer-link">Testimonios</a>
+        <a href="#faq" class="footer-link">FAQ</a>
+        <a href="#contacto" class="footer-link">Contacto</a>
+      </div>
+      <div class="social-links">
+        <a href="#" class="social-link">🌐</a>
+        <a href="#" class="social-link">🐦</a>
+        <a href="#" class="social-link">📘</a>
+      </div>
+      <p class="copyright">© 2025 IA Educativa. Todos los derechos reservados.</p>
     </div>
   </footer>
+
+  <script>
+    // Toggle menú móvil
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    mobileMenuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+    
+    // Toggle FAQ
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      question.addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+    });
+  </script>
 </body>
 </html>
