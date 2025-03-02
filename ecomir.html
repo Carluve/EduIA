@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Costo vs Rendimiento de Modelos LLM en MIR 2025</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #e9ecef;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        button.active {
+            background-color: #4285F4;
+            color: white;
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 600px;
+            position: relative;
+        }
+        
+        .tooltip {
+            position: absolute;
+            padding: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            pointer-events: none;
+            font-size: 14px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .highlights {
+            margin-top: 30px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        
+        .highlights h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .highlights ul {
+            padding-left: 20px;
+        }
+        
+        .highlights li {
+            margin-bottom: 8px;
+        }
+        
+        .axis-label {
+            font-size: 12px;
+            font-weight: 500;
+            text-anchor: middle;
+        }
+        
+        .human-line-label {
+            font-size: 11px;
+            font-weight: 500;
+            fill: #333;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Costo vs Rendimiento de Modelos LLM en el Examen MIR 2025</h1>
+        
+        <div class="buttons">
+            <button id="all" class="active">Todos los modelos</button>
+            <button id="low-cost">Bajo costo (≤ $1)</button>
+            <button id="mid-cost">Costo medio ($1-$5)</button>
+            <button id="high-cost">Alto costo (> $5)</button>
+            <button id="toggle-labels">Ocultar etiquetas</button>
+        </div>
+        
+        <div class="chart-container" id="chart"></div>
+        
+        <div class="legend" id="legend"></div>
+        
+        <div class="highlights">
+            <h3>Modelos destacados:</h3>
+            <ul>
+                <li><strong>Mejor rendimiento:</strong> Miri Pro (95.59%) - excelente rendimiento con costo moderado ($2.44)</li>
+                <li><strong>Mejor costo-beneficio:</strong> GPT-4o Mini (80%) - buen rendimiento con costo mínimo ($0.05)</li>
+                <li><strong>Más costoso:</strong> o1 (91%) - excelente rendimiento pero con un costo muy elevado ($15.19)</li>
+                <li><strong>Top razonadores:</strong> Deepseek Reasoner (93.63%) y Claude Sonet 3.5 (88.73%) - destacan en razonamiento clínico</li>
+                <li>Varios modelos superan el rendimiento del mejor humano (78.57%)</li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>Fuente de datos: "Evaluating Large Language Models on the Spanish Medical Intern Resident (MIR) Examination 2024/2025: A Comparative Analysis of Clinical Reasoning and Knowledge Application"</p>
+            <p>© 2025 - Datos aproximados basados en la investigación.</p>
+        </footer>
+    </div>
+    
+    <div class="tooltip" id="tooltip"></div>
+    
+    <script>
+        // Datos de los modelos
+        const modelData = [
+            { modelo: "AWS Nova Lite", score: 68, costo: 0.05, proveedor: "bedrock" },
+            { modelo: "AWS Nova Micro", score: 57, costo: 0.02, proveedor: "bedrock" },
+            { modelo: "AWS Nova Pro", score: 78, costo: 0.2, proveedor: "bedrock" },
+            { modelo: "Claude Haiku 3.5", score: 65, costo: 0.08, proveedor: "bedrock" },
+            { modelo: "Claude Haiku 3.5 New", score: 70, costo: 0.07, proveedor: "bedrock" },
+            { modelo: "Claude Sonet 3.5", score: 88.73, costo: 2.93, proveedor: "bedrock" },
+            { modelo: "Llama 3.2 1B", score: 35.78, costo: 0.02, proveedor: "bedrock" },
+            { modelo: "Llama 3.2 3B", score: 43.14, costo: 0.03, proveedor: "bedrock" },
+            { modelo: "Miri", score: 85, costo: 0.45, proveedor: "binpar" },
+            { modelo: "Miri Pro", score: 95.59, costo: 2.44, proveedor: "binpar" },
+            { modelo: "Deepseek Chat", score: 82, costo: 0.32, proveedor: "deepseek" },
+            { modelo: "Deepseek Reasoner", score: 93.63, costo: 2.26, proveedor: "deepseek" },
+            { modelo: "Gemini 1.5 Flash", score: 75, costo: 0.1, proveedor: "google" },
+            { modelo: "Gemini 1.5 Flash-8B", score: 70, costo: 0.1, proveedor: "google" },
+            { modelo: "Gemini 1.5 Pro", score: 80, costo: 4.02, proveedor: "google" },
+            { modelo: "Gemini 2.0 Flash", score: 85, costo: 0.3, proveedor: "google" },
+            { modelo: "GPT-3.5 Turbo", score: 75, costo: 0.09, proveedor: "openai" },
+            { modelo: "GPT-4 Turbo", score: 86.27, costo: 4.83, proveedor: "openai" },
+            { modelo: "GPT-4o", score: 89, costo: 2.54, proveedor: "openai" },
+            { modelo: "GPT-4o Mini", score: 80, costo: 0.05, proveedor: "openai" },
+            { modelo: "o1", score: 91, costo: 15.19, proveedor: "openai" },
+            { modelo: "o1-mini", score: 84, costo: 0.79, proveedor: "openai" },
+            { modelo: "Grok 2", score: 87, costo: 2.75, proveedor: "x" },
+            { modelo: "Grok 2 Vision", score: 83, costo: 1.3, proveedor: "x" },
+            { modelo: "Grok Beta", score: 82, costo: 1.4, proveedor: "x" },
+            { modelo: "Grok Vision Beta", score: 85.29, costo: 1.21, proveedor: "x" }
+        ];
+        
+        // Colores para los proveedores
+        const colorMap = {
+            "bedrock": "#4285F4", // azul
+            "binpar": "#EA4335",  // rojo
+            "deepseek": "#FBBC05", // amarillo
+            "google": "#34A853",  // verde
+            "openai": "#9C27B0",  // morado
+            "x": "#FF6D00"        // naranja
+        };
+        
+        // Puntuación humana de referencia
+        const humanScore = 78.57;
+        
+        // Variables para el estado
+        let currentView = "all";
+        let showLabels = true;
+        
+        // Filtrar datos según la vista seleccionada
+        function getFilteredData() {
+            switch(currentView) {
+                case "low-cost":
+                    return modelData.filter(d => d.costo <= 1);
+                case "mid-cost":
+                    return modelData.filter(d => d.costo > 1 && d.costo <= 5);
+                case "high-cost":
+                    return modelData.filter(d => d.costo > 5);
+                default:
+                    return modelData;
+            }
+        }
+        
+        // Obtener dominio del eje X según la vista
+        function getXDomain() {
+            switch(currentView) {
+                case "low-cost": return [0, 1];
+                case "mid-cost": return [1, 5];
+                case "high-cost": return [5, 20];
+                default: return [0, 20];
+            }
+        }
+        
+        // Configuración del gráfico
+        function createChart() {
+            const margin = {top: 50, right: 60, bottom: 60, left: 60};
+            const chartContainer = document.getElementById("chart");
+            const width = chartContainer.clientWidth - margin.left - margin.right;
+            const height = chartContainer.clientHeight - margin.top - margin.bottom;
+            
+            // Limpiar gráfico existente
+            d3.select("#chart svg").remove();
+            
+            // Crear SVG
+            const svg = d3.select("#chart")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+            
+            // Datos filtrados
+            const data = getFilteredData();
+            
+            // Escalas
+            const xDomain = getXDomain();
+            const x = d3.scaleLinear()
+                .domain(xDomain)
+                .range([0, width]);
+            
+            const y = d3.scaleLinear()
+                .domain([30, 100])
+                .range([height, 0]);
+            
+            // Ejes
+            const xAxis = d3.axisBottom(x)
+                .tickFormat(d => `$${d}`);
+            
+            const yAxis = d3.axisLeft(y);
+            
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(xAxis);
+            
+            svg.append("g")
+                .call(yAxis);
+            
+            // Etiquetas de ejes
+            svg.append("text")
+                .attr("class", "axis-label")
+                .attr("x", width / 2)
+                .attr("y", height + 40)
+                .text("Costo por ejecución ($)");
+            
+            svg.append("text")
+                .attr("class", "axis-label")
+                .attr("transform", "rotate(-90)")
+                .attr("x", -height / 2)
+                .attr("y", -40)
+                .text("Puntuación en examen MIR (%)");
+            
+            // Línea de rendimiento humano
+            svg.append("line")
+                .attr("x1", 0)
+                .attr("y1", y(humanScore))
+                .attr("x2", width)
+                .attr("y2", y(humanScore))
+                .attr("stroke", "#000")
+                .attr("stroke-width", 1)
+                .attr("stroke-dasharray", "5,5");
+            
+            svg.append("text")
+                .attr("class", "human-line-label")
+                .attr("x", width - 10)
+                .attr("y", y(humanScore) - 5)
+                .attr("text-anchor", "end")
+                .text(`Mejor humano (${humanScore}%)`);
+            
+            // Tooltip
+            const tooltip = d3.select("#tooltip");
+            
+            // Agrupar datos por proveedor
+            const proveedores = Object.keys(colorMap);
+            
+            // Dibujar puntos por proveedor
+            proveedores.forEach(proveedor => {
+                const proveedorData = data.filter(d => d.proveedor === proveedor);
+                
+                if (proveedorData.length === 0) return;
+                
+                // Puntos
+                svg.selectAll(`.dot-${proveedor}`)
+                    .data(proveedorData)
+                    .enter()
+                    .append("circle")
+                    .attr("class", `dot-${proveedor}`)
+                    .attr("cx", d => x(d.costo))
+                    .attr("cy", d => y(d.score))
+                    .attr("r", 6)
+                    .attr("fill", colorMap[proveedor])
+                    .on("mouseover", function(event, d) {
+                        d3.select(this)
+                            .transition()
+                            .duration(200)
+                            .attr("r", 9);
+                        
+                        tooltip.transition()
+                            .duration(200)
+                            .style("opacity", 0.9);
+                        
+                        tooltip.html(`
+                            <strong>${d.modelo}</strong><br>
+                            Puntuación: ${d.score.toFixed(2)}%<br>
+                            Costo: $${d.costo.toFixed(2)}<br>
+                            Proveedor: ${d.proveedor}
+                        `)
+                            .style("left", (event.pageX + 10) + "px")
+                            .style("top", (event.pageY - 28) + "px");
+                    })
+                    .on("mouseout", function() {
+                        d3.select(this)
+                            .transition()
+                            .duration(200)
+                            .attr("r", 6);
+                        
+                        tooltip.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                    });
+                
+                // Etiquetas
+                if (showLabels) {
+                    svg.selectAll(`.label-${proveedor}`)
+                        .data(proveedorData)
+                        .enter()
+                        .append("text")
+                        .attr("class", `label-${proveedor}`)
+                        .attr("x", d => x(d.costo))
+                        .attr("y", d => y(d.score) - 10)
+                        .attr("text-anchor", "middle")
+                        .attr("font-size", "10px")
+                        .attr("font-weight", "bold")
+                        .text(d => d.modelo.length > 12 ? d.modelo.substring(0, 12) + "..." : d.modelo);
+                }
+            });
+            
+            // Actualizar leyenda
+            updateLegend(proveedores.filter(p => data.some(d => d.proveedor === p)));
+        }
+        
+        // Actualizar leyenda
+        function updateLegend(proveedores) {
+            const legend = d3.select("#legend");
+            legend.html("");
+            
+            proveedores.forEach(proveedor => {
+                const item = legend.append("div")
+                    .attr("class", "legend-item");
+                
+                item.append("div")
+                    .attr("class", "legend-color")
+                    .style("background-color", colorMap[proveedor]);
+                
+                item.append("span")
+                    .text(proveedor.charAt(0).toUpperCase() + proveedor.slice(1));
+            });
+        }
+        
+        // Inicializar gráfico
+        createChart();
+        
+        // Event listeners para botones
+        document.getElementById("all").addEventListener("click", function() {
+            setActiveView("all");
+        });
+        
+        document.getElementById("low-cost").addEventListener("click", function() {
+            setActiveView("low-cost");
+        });
+        
+        document.getElementById("mid-cost").addEventListener("click", function() {
+            setActiveView("mid-cost");
+        });
+        
+        document.getElementById("high-cost").addEventListener("click", function() {
+            setActiveView("high-cost");
+        });
+        
+        document.getElementById("toggle-labels").addEventListener("click", function() {
+            showLabels = !showLabels;
+            this.textContent = showLabels ? "Ocultar etiquetas" : "Mostrar etiquetas";
+            createChart();
+        });
+        
+        // Establecer vista activa
+        function setActiveView(view) {
+            currentView = view;
+            
+            // Actualizar clases de botones
+            document.querySelectorAll(".buttons button").forEach(button => {
+                button.classList.remove("active");
+            });
+            
+            document.getElementById(view).classList.add("active");
+            
+            // Recrear gráfico
+            createChart();
+        }
+        
+        // Redimensionar gráfico cuando cambia el tamaño de la ventana
+        window.addEventListener("resize", function() {
+            createChart();
+        });
+    </script>
+</body>
+</html>
