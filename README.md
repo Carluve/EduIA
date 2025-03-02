@@ -48,8 +48,6 @@ El sitio incluye información sobre los frameworks de IA que he desarrollado:
 ## Contacto
 
 Para más información o colaboraciones:
-- Email: carlos.luengo@outlook.com
-- Teléfono: +34627445234
 - LinkedIn: [perfil de LinkedIn]
 
 ## Licencia
