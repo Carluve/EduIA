@@ -1,0 +1,248 @@
+// papermir/js/charts-data.js
+const chartData = {
+    performanceComparison: {
+        overallComparison: {
+            labels: ['GPT-4 Turbo', 'Claude Sonet 3.5', 'Deepseek Reasoner', 'Grok Vision Beta', 'Miri Pro', 'Best Human'],
+            datasets: [{
+                label: '2024',
+                data: [89.27, 92.68, 94.15, 87.80, 97.56, 88.57],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }, {
+                label: '2025',
+                data: [86.27, 88.73, 93.63, 85.29, 95.59, 78.57],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        yearChange: {
+            labels: ['GPT-4 Turbo', 'Claude Sonet 3.5', 'Deepseek Reasoner', 'Grok Vision Beta', 'Miri Pro'],
+            datasets: [{
+                label: 'Change in Performance',
+                data: [-3.00, -3.95, -0.52, -2.51, -1.97],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
+                borderWidth: 1
+            }]
+        }
+    },
+    reasoning: {
+        reasoning2024: {
+            labels: ['Deepseek Reasoner', 'GPT-4o Mini', 'GPT-4o', 'Claude Sonnet 3.5'],
+            datasets: [{
+                label: '2024',
+                data: [94.15, 90.1, 92.2, 92.68],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                borderWidth: 1
+            }]
+        },
+        reasoning2025: {
+            labels: ['Deepseek Reasoner', 'GPT-4o Mini', 'GPT-4o', 'Claude Sonnet 3.5'],
+            datasets: [{
+                label: '2025',
+                data: [93.63, 88.2, 90.9, 88.73],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                borderWidth: 1
+            }]
+        },
+        reasoningCompare:{
+            labels: ['Deepseek Reasoner', 'GPT-4o Mini', 'GPT-4o', 'Claude Sonnet 3.5'],
+            datasets: [{
+                label: 'Change in Performance',
+                data: [-0.52, -1.9, -1.3, -3.95],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                borderWidth: 1
+            }]
+        }
+    },
+    imageQuestions: {
+        imagesOverall: {
+            labels: ['Grok Vision Beta', 'Gemini Vision Pro', 'Claude Haiku', 'Miri Pro','Best Human'],
+            datasets: [{
+                label: '2024',
+                data: [87.80, 80, 70.3, 86, 80.5],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }, {
+                label: '2025',
+                data: [85.29, 78.2, 68.4, 84.5, 75.6],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        imagesCompare:{
+            labels: ['Grok Vision Beta', 'Gemini Vision Pro', 'Claude Haiku', 'Miri Pro'],
+            datasets: [{
+                label: 'Change in Performance',
+                data: [-2.51, -1.8, -1.9, -1.5],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                borderWidth: 1
+            }]
+        },
+        imagesVsText:{
+            labels: ['Grok Vision Beta','GPT-4 Turbo','Miri Pro'],
+            datasets: [{
+                label: 'Images Questions',
+                data: [85.29, 83.2, 84.5],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+                borderWidth: 1
+            },{
+                label: 'Text Questions',
+                data: [85.80, 85.5, 86.7],
+                backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+                borderWidth: 1
+            }]
+        }
+    },
+    modelPerformance:{
+        models2024: {
+            labels: ['GPT-4 Turbo', 'Claude Sonet 3.5', 'Deepseek Reasoner', 'Grok Vision Beta','Miri Pro'],
+            datasets: [{
+                label: '2024',
+                data: [89.27, 92.68, 94.15, 87.80, 97.56],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)','rgba(153, 102, 255, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
+                borderWidth: 1
+            }]
+        },
+        models2025: {
+            labels: ['GPT-4 Turbo', 'Claude Sonet 3.5', 'Deepseek Reasoner', 'Grok Vision Beta','Miri Pro'],
+            datasets: [{
+                label: '2025',
+                data: [86.27, 88.73, 93.63, 85.29, 95.59],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)','rgba(153, 102, 255, 0.2)'],
+                borderColor: ['rgba
+// papermir/js/charts-data.js
+const chartData = {
+    performanceComparison: {
+        overallComparison: {
+            labels: ['GPT-4 Turbo', 'Claude Sonet 3.5', 'Deepseek Reasoner', 'Grok Vision Beta', 'Miri Pro', 'Best Human'],
+            datasets: [{
+                label: '2024',
+                data: [89.27, 92.68, 94.15, 87.80, 97.56, 88.57],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }, {
+                label: '2025',
+                data: [86.27, 88.73, 93.63, 85.29, 95.59, 78.57],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        yearChange: {
+            labels: ['GPT-4 Turbo', 'Claude Sonet 3.5', 'Deepseek Reasoner', 'Grok Vision Beta', 'Miri Pro'],
+            datasets: [{
+                label: 'Change in Performance',
+                data: [-3.00, -3.95, -0.52, -2.51, -1.97],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
+                borderWidth: 1
+            }]
+        }
+    },
+    reasoning: {
+        reasoning2024: {
+            labels: ['Deepseek Reasoner', 'GPT-4o Mini', 'GPT-4o', 'Claude Sonnet 3.5'],
+            datasets: [{
+                label: '2024',
+                data: [94.15, 90.1, 92.2, 92.68],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                borderWidth: 1
+            }]
+        },
+        reasoning2025: {
+            labels: ['Deepseek Reasoner', 'GPT-4o Mini', 'GPT-4o', 'Claude Sonnet 3.5'],
+            datasets: [{
+                label: '2025',
+                data: [93.63, 88.2, 90.9, 88.73],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                borderWidth: 1
+            }]
+        },
+        reasoningCompare:{
+            labels: ['Deepseek Reasoner', 'GPT-4o Mini', 'GPT-4o', 'Claude Sonnet 3.5'],
+            datasets: [{
+                label: 'Change in Performance',
+                data: [-0.52, -1.9, -1.3, -3.95],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                borderWidth: 1
+            }]
+        }
+    },
+    imageQuestions: {
+        imagesOverall: {
+            labels: ['Grok Vision Beta', 'Gemini Vision Pro', 'Claude Haiku', 'Miri Pro','Best Human'],
+            datasets: [{
+                label: '2024',
+                data: [87.80, 80, 70.3, 86, 80.5],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }, {
+                label: '2025',
+                data: [85.29, 78.2, 68.4, 84.5, 75.6],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        imagesCompare:{
+            labels: ['Grok Vision Beta', 'Gemini Vision Pro', 'Claude Haiku', 'Miri Pro'],
+            datasets: [{
+                label: 'Change in Performance',
+                data: [-2.51, -1.8, -1.9, -1.5],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                borderWidth: 1
+            }]
+        },
+        imagesVsText:{
+            labels: ['Grok Vision Beta','GPT-4 Turbo','Miri Pro'],
+            datasets: [{
+                label: 'Images Questions',
+                data: [85.29, 83.2, 84.5],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+                borderWidth: 1
+            },{
+                label: 'Text Questions',
+                data: [85.80, 85.5, 86.7],
+                backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(54, 162, 235, 0.5)', 'rgba(255, 206, 86, 0.5)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+                borderWidth: 1
+            }]
+        }
+    },
+    modelPerformance:{
+        models2024: {
+            labels: ['GPT-4 Turbo', 'Claude Sonet 3.5', 'Deepseek Reasoner', 'Grok Vision Beta','Miri Pro'],
+            datasets: [{
+                label: '2024',
+                data: [89.27, 92.68, 94.15, 87.80, 97.56],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)','rgba(153, 102, 255, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
+                borderWidth: 1
+            }]
+        },
+        models2025: {
+            labels: ['GPT-4 Turbo', 'Claude Sonet 3.5', 'Deepseek Reasoner', 'Grok Vision Beta','Miri Pro'],
+            datasets: [{
+                label: '2025',
+                data: [86.27, 88.73, 93.63, 85.29, 95.59],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(75, 192, 192, 0.2)','rgba(153, 102, 255, 0.2)'],
+                borderColor: ['rgba

@@ -1,0 +1,534 @@
+/* ============================
+   ESTILOS PARA GRÁFICOS
+   ============================ */
+
+/* Variables de colores para gráficos */
+:root {
+    /* Colores principales de gráficos */
+    --chart-blue: #4e79a7;
+    --chart-orange: #f28e2c;
+    --chart-red: #e15759;
+    --chart-teal: #76b7b2;
+    --chart-green: #59a14f;
+    --chart-purple: #af7aa1;
+    --chart-pink: #ff9da7;
+    --chart-brown: #9c755f;
+    --chart-gray: #bab0ac;
+
+    /* Colores por categoría de modelo */
+    --model-general: #f28e2c;     /* Naranja - Modelos generales */
+    --model-specialized: #59a14f; /* Verde - Modelos especializados */
+    --model-multimodal: #4e79a7;  /* Azul - Modelos multimodales */
+    --model-reasoning: #76b7b2;   /* Verde azulado - Modelos de razonamiento */
+    --model-human: #e15759;       /* Rojo - Rendimiento humano */
+
+    /* Colores para comparativas */
+    --compare-2024: #4e79a7;      /* Azul - Datos 2024 */
+    --compare-2025: #f28e2c;      /* Naranja - Datos 2025 */
+    --compare-reasoning: #76b7b2; /* Verde azulado - Razonamiento */
+    --compare-memory: #af7aa1;    /* Púrpura - Memorización */
+    --compare-modified: #ff9da7;  /* Rosa - Preguntas modificadas */
+    --compare-images: #59a14f;    /* Verde - Preguntas con imágenes */
+    --compare-text: #4e79a7;      /* Azul - Preguntas de texto */
+    
+    /* Colores para rendimiento positivo/negativo */
+    --performance-positive: #59a14f; /* Verde - Mejora */
+    --performance-negative: #e15759; /* Rojo - Deterioro */
+}
+
+/* Contenedor principal de gráficos */
+.chart {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    border-radius: var(--border-radius-md);
+    background-color: var(--bg-white);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+/* Contenedor de controles */
+.chart-controls {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.chart-btn {
+    padding: 8px 16px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-light);
+    color: var(--text-medium);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+}
+
+.chart-btn:hover {
+    background-color: rgba(29, 58, 131, 0.1);
+}
+
+.chart-btn.active {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    border-color: var(--primary-color);
+}
+
+/* Mensaje de carga */
+.chart-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    pointer-events: none;
+}
+
+.chart-loading.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.chart-loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(29, 58, 131, 0.1);
+    border-left-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+    to { transform: rotate(360deg); }
+}
+
+/* Tooltip para gráficos */
+.chart-tooltip {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 8px 12px;
+    font-size: var(--font-size-sm);
+    color: var(--text-dark);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+    max-width: 220px;
+}
+
+.chart-tooltip.visible {
+    opacity: 1;
+}
+
+.chart-tooltip-title {
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 4px;
+    color: var(--primary-color);
+}
+
+.chart-tooltip-value {
+    font-weight: var(--font-weight-medium);
+}
+
+/* Leyenda de gráficos */
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.chart-legend-item {
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size-sm);
+    color: var(--text-medium);
+}
+
+.chart-legend-color {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+/* Ejes de gráficos */
+.chart-axis path,
+.chart-axis line {
+    stroke: #ddd;
+    shape-rendering: crispEdges;
+}
+
+.chart-axis text {
+    font-size: 11px;
+    fill: var(--text-medium);
+}
+
+.chart-axis-title {
+    font-size: 12px;
+    fill: var(--text-dark);
+    font-weight: var(--font-weight-medium);
+}
+
+.chart-grid line {
+    stroke: #e5e5e5;
+    shape-rendering: crispEdges;
+    stroke-dasharray: 2, 2;
+}
+
+/* Título y subtítulo de gráficos */
+.chart-title {
+    font-size: 14px;
+    font-weight: var(--font-weight-semibold);
+    text-anchor: middle;
+    fill: var(--primary-color);
+    font-family: var(--font-family-headings);
+}
+
+.chart-subtitle {
+    font-size: 12px;
+    fill: var(--text-medium);
+    text-anchor: middle;
+    font-family: var(--font-family-sans);
+}
+
+/* Elementos de gráficos */
+.chart-bar {
+    cursor: pointer;
+    transition: opacity var(--transition-fast);
+}
+
+.chart-bar:hover {
+    opacity: 0.8;
+}
+
+.chart-line {
+    fill: none;
+    stroke-width: 2;
+}
+
+.chart-area {
+    opacity: 0.5;
+}
+
+.chart-dot {
+    transition: r 0.2s;
+    cursor: pointer;
+}
+
+.chart-dot:hover {
+    r: 6;
+}
+
+/* Etiquetas de valor en gráficos */
+.chart-label {
+    font-size: 11px;
+    font-weight: var(--font-weight-medium);
+    text-anchor: middle;
+    font-family: var(--font-family-sans);
+}
+
+/* Estilos para diferentes tipos de gráficos */
+/* Gráfico de barras */
+.bar-chart .bar-positive {
+    fill: var(--performance-positive);
+}
+
+.bar-chart .bar-negative {
+    fill: var(--performance-negative);
+}
+
+.bar-chart .bar-2024 {
+    fill: var(--compare-2024);
+}
+
+.bar-chart .bar-2025 {
+    fill: var(--compare-2025);
+}
+
+.bar-chart .bar-general {
+    fill: var(--model-general);
+}
+
+.bar-chart .bar-specialized {
+    fill: var(--model-specialized);
+}
+
+.bar-chart .bar-multimodal {
+    fill: var(--model-multimodal);
+}
+
+.bar-chart .bar-reasoning {
+    fill: var(--model-reasoning);
+}
+
+.bar-chart .bar-human {
+    fill: var(--model-human);
+}
+
+/* Gráfico de barras agrupadas */
+.grouped-bar-chart .group-label {
+    font-size: 10px;
+    fill: var(--text-medium);
+    text-anchor: middle;
+}
+
+/* Gráfico de líneas */
+.line-chart .line-2024 {
+    stroke: var(--compare-2024);
+}
+
+.line-chart .line-2025 {
+    stroke: var(--compare-2025);
+}
+
+.line-chart .line-reasoning {
+    stroke: var(--compare-reasoning);
+}
+
+.line-chart .line-memory {
+    stroke: var(--compare-memory);
+}
+
+.line-chart .line-general {
+    stroke: var(--model-general);
+}
+
+.line-chart .line-specialized {
+    stroke: var(--model-specialized);
+}
+
+.line-chart .line-multimodal {
+    stroke: var(--model-multimodal);
+}
+
+.line-chart .line-human {
+    stroke: var(--model-human);
+}
+
+/* Gráfico de dispersión */
+.scatter-chart .dot-general {
+    fill: var(--model-general);
+}
+
+.scatter-chart .dot-specialized {
+    fill: var(--model-specialized);
+}
+
+.scatter-chart .dot-multimodal {
+    fill: var(--model-multimodal);
+}
+
+.scatter-chart .dot-reasoning {
+    fill: var(--model-reasoning);
+}
+
+.scatter-chart .dot-human {
+    fill: var(--model-human);
+}
+
+/* Gráfico de radar */
+.radar-chart .radar-area {
+    fill-opacity: 0.3;
+    stroke-width: 2;
+}
+
+.radar-chart .radar-axis line {
+    stroke: #e5e5e5;
+}
+
+.radar-chart .radar-axis text {
+    font-size: 10px;
+    fill: var(--text-medium);
+}
+
+.radar-chart .radar-circle {
+    stroke: #e5e5e5;
+    stroke-dasharray: 2, 2;
+    fill: none;
+}
+
+/* Gráfico de comparación */
+.comparison-chart .bar-group {
+    cursor: pointer;
+}
+
+.comparison-chart .label-highlight {
+    font-weight: var(--font-weight-semibold);
+    fill: var(--text-dark);
+}
+
+/* Gráfico de comparación humano vs IA */
+.human-vs-ai-chart .category-label {
+    font-size: 11px;
+    fill: var(--text-dark);
+    font-weight: var(--font-weight-medium);
+    text-anchor: end;
+}
+
+.human-vs-ai-chart .human-bar {
+    fill: var(--model-human);
+    transition: opacity var(--transition-fast);
+}
+
+.human-vs-ai-chart .ai-bar {
+    fill: var(--model-specialized);
+    transition: opacity var(--transition-fast);
+}
+
+.human-vs-ai-chart .bar-label {
+    font-size: 10px;
+    fill: var(--text-white);
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+/* Animaciones para los gráficos */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.chart-animated {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes growBar {
+    from { height: 0; y: 100%; }
+    to { height: attr(data-height px); y: attr(data-y px); }
+}
+
+.bar-animate {
+    animation: growBar 0.8s ease-out;
+}
+
+@keyframes drawLine {
+    from { stroke-dashoffset: 1000; }
+    to { stroke-dashoffset: 0; }
+}
+
+.line-animate {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawLine 1.5s ease-out forwards;
+}
+
+/* Gráfico de cuadrícula de calor */
+.heatmap-chart rect {
+    stroke: #fff;
+    stroke-width: 1px;
+    transition: opacity var(--transition-fast);
+}
+
+.heatmap-chart rect:hover {
+    stroke-width: 2px;
+    stroke: #333;
+}
+
+.heatmap-chart text {
+    font-size: 10px;
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+/* Gráfico de burbujas */
+.bubble-chart circle {
+    stroke: #fff;
+    stroke-width: 1;
+    transition: all var(--transition-normal);
+}
+
+.bubble-chart circle:hover {
+    stroke-width: 2;
+    stroke: #333;
+}
+
+.bubble-chart .bubble-label {
+    font-size: 9px;
+    text-anchor: middle;
+    fill: var(--text-white);
+    pointer-events: none;
+}
+
+/* Mensaje de no datos */
+.chart-no-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    color: var(--text-medium);
+    font-size: var(--font-size-md);
+    text-align: center;
+    padding: var(--spacing-lg);
+}
+
+.chart-no-data svg {
+    width: 40px;
+    height: 40px;
+    margin-bottom: var(--spacing-sm);
+    opacity: 0.5;
+}
+
+/* Adaptación responsive para gráficos */
+@media (max-width: 767px) {
+    .chart {
+        height: 350px;
+    }
+    
+    .chart-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .chart-btn {
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    .chart-legend {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 575px) {
+    .chart {
+        height: 300px;
+    }
+    
+    .chart-title {
+        font-size: 12px;
+    }
+    
+    .chart-subtitle {
+        font-size: 10px;
+    }
+    
+    .chart-axis text {
+        font-size: 9px;
+    }
+    
+    .chart-axis-title {
+        font-size: 10px;
+    }
+}

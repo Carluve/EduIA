@@ -1,0 +1,324 @@
+/* ============================
+   ESTILOS PARA IMPRESIÓN
+   Optimiza el contenido cuando se imprime
+   ============================ */
+
+@media print {
+    /* Configuración básica para impresión */
+    *,
+    *::before,
+    *::after {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        transition: none !important;
+    }
+
+    /* Establecer un tamaño de página adecuado */
+    @page {
+        margin: 0.75cm;
+        size: A4;
+    }
+
+    /* Tipografía para impresión */
+    body {
+        font-family: Georgia, 'Times New Roman', Times, serif !important;
+        font-size: 12pt !important;
+        line-height: 1.4 !important;
+        color: #000 !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+        page-break-inside: avoid;
+        font-family: Georgia, 'Times New Roman', Times, serif !important;
+        color: #000 !important;
+    }
+
+    h1 { font-size: 22pt !important; }
+    h2 { font-size: 18pt !important; }
+    h3 { font-size: 16pt !important; }
+    h4 { font-size: 14pt !important; }
+    h5, h6 { font-size: 13pt !important; }
+
+    p, blockquote, ul, ol, dl, table {
+        margin-bottom: 10pt !important;
+    }
+
+    /* Elementos a ocultar en la versión impresa */
+    .main-nav,
+    .mobile-nav-toggle,
+    .hero-actions,
+    .chart-controls,
+    .cta-box,
+    .footer-social,
+    .action-button,
+    button:not([type="submit"]),
+    .btn:not(.essential-btn) {
+        display: none !important;
+    }
+
+    /* Ajustar encabezado para impresión */
+    .main-header {
+        padding: 10pt 0 !important;
+        margin-bottom: 20pt !important;
+        border-bottom: 1pt solid #000 !important;
+        background-color: #fff !important;
+    }
+
+    .logo-container {
+        text-align: center !important;
+    }
+
+    .logo {
+        max-height: 60pt !important;
+    }
+
+    .hero-banner {
+        margin-bottom: 30pt !important;
+        padding: 0 !important;
+        background: none !important;
+        color: #000 !important;
+    }
+
+    .hero-banner::after {
+        display: none !important;
+    }
+
+    .hero-content {
+        text-align: center !important;
+        padding: 0 !important;
+    }
+
+    .hero-content h1 {
+        color: #000 !important;
+        font-size: 24pt !important;
+        margin-bottom: 8pt !important;
+    }
+
+    .hero-subtitle {
+        font-size: 16pt !important;
+        color: #000 !important;
+    }
+
+    /* Ajustar secciones para impresión */
+    .section {
+        padding: 15pt 0 !important;
+        margin-bottom: 15pt !important;
+        page-break-inside: avoid !important;
+    }
+
+    .section-header {
+        margin-bottom: 15pt !important;
+    }
+
+    .section-title {
+        color: #000 !important;
+        margin-bottom: 5pt !important;
+    }
+
+    .section-divider {
+        background-color: #000 !important;
+        margin-bottom: 10pt !important;
+    }
+
+    /* Evitar que el contenido importante se divida entre páginas */
+    .section-content h3,
+    .section-content h4,
+    .content-box,
+    .findings-box,
+    .content-highlight,
+    .conclusion-box,
+    .research-area-card,
+    .researcher-card,
+    table,
+    figure,
+    .chart-container,
+    .process-steps li {
+        page-break-inside: avoid !important;
+    }
+
+    /* Nueva página para secciones principales */
+    #metodologia,
+    #resultados,
+    #conclusiones,
+    #futuras-lineas {
+        page-break-before: always !important;
+    }
+
+    /* Adaptación de elementos específicos */
+    .process-steps {
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .process-steps li {
+        margin-bottom: 15pt !important;
+    }
+
+    .process-steps li::before {
+        border: 1pt solid #000 !important;
+    }
+
+    .step-content {
+        padding-left: 15pt !important;
+        border-left: 1pt dashed #000 !important;
+    }
+
+    /* Adaptar los gráficos para impresión */
+    .chart {
+        height: auto !important;
+        min-height: 250pt !important;
+        max-height: 300pt !important;
+        border: 1pt solid #000 !important;
+        margin: 15pt 0 !important;
+    }
+
+    /* Optimizar las imágenes para impresión */
+    img {
+        max-width: 100% !important;
+        max-height: 300pt !important;
+        page-break-inside: avoid !important;
+    }
+
+    .full-width-img {
+        margin: 15pt auto !important;
+    }
+
+    /* Adaptar los grids para impresión */
+    .researchers-grid,
+    .future-research-grid {
+        display: block !important;
+    }
+
+    .researcher-card,
+    .research-area-card {
+        margin-bottom: 15pt !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        border: 1pt solid #000 !important;
+    }
+
+    /* Tablas */
+    .table-responsive {
+        overflow-x: visible !important;
+    }
+
+    .data-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+    }
+
+    .data-table th,
+    .data-table td {
+        border: 1pt solid #000 !important;
+        padding: 5pt !important;
+    }
+
+    .data-table th {
+        background-color: #f0f0f0 !important;
+    }
+
+    /* Listas */
+    .numbered-list li::before,
+    .feature-list li::before,
+    .findings-list li::before {
+        border: 1pt solid #000 !important;
+        color: #000 !important;
+    }
+
+    /* Pie de página optimizado */
+    .main-footer {
+        margin-top: 20pt !important;
+        padding-top: 15pt !important;
+        border-top: 1pt solid #000 !important;
+        background: none !important;
+        color: #000 !important;
+    }
+
+    .footer-grid {
+        display: block !important;
+    }
+
+    .footer-section {
+        margin-bottom: 15pt !important;
+        page-break-inside: avoid !important;
+    }
+
+    .footer-section h3 {
+        color: #000 !important;
+        font-size: 14pt !important;
+    }
+
+    .footer-section h3::after {
+        background-color: #000 !important;
+    }
+
+    .footer-links a,
+    .contact-link {
+        color: #000 !important;
+    }
+
+    /* Mostrar URLs para los enlaces */
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 10pt;
+        font-style: italic;
+    }
+
+    /* Excepciones: no mostrar URLs para enlaces de navegación interna o sin href */
+    .nav-link[href^="#"]::after,
+    a[href^="javascript:"]::after,
+    a[href^="#"]::after {
+        content: "";
+    }
+
+    /* Pie de página copyright */
+    .footer-bottom {
+        margin-top: 15pt !important;
+        padding-top: 10pt !important;
+        border-top: 1pt solid #000 !important;
+        text-align: center !important;
+    }
+
+    .copyright {
+        color: #000 !important;
+        font-size: 10pt !important;
+    }
+
+    /* Ajustes de contenedor */
+    .container {
+        width: 100% !important;
+        max-width: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Elementos de fondo */
+    .section-alt {
+        background: none !important;
+    }
+
+    /* Asegurar que el texto sea legible */
+    body {
+        color: #000 !important;
+    }
+
+    /* Elementos interactivos */
+    .chart-tooltip,
+    .mobile-nav-toggle,
+    .chart-controls {
+        display: none !important;
+    }
+
+    /* Pie de página con información de impresión */
+    body::after {
+        content: "Impreso desde: Universidad de Alcalá - Investigación LLMs en el Examen MIR. Fecha: " attr(data-print-date);
+        display: block;
+        text-align: center;
+        font-size: 9pt;
+        color: #666;
+        margin-top: 20pt;
+    }
+}

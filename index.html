@@ -1,881 +1,450 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IA Generativa en Educación</title>
-  <style>
-    :root {
-      --primary-color: #6366f1;
-      --secondary-color: #4f46e5;
-      --accent-color: #818cf8;
-      --text-color: #1f2937;
-      --light-bg: #f9fafb;
-      --white: #ffffff;
-      --dark-bg: #111827;
-      --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    }
-    
-    body {
-      background-color: var(--light-bg);
-      color: var(--text-color);
-      line-height: 1.6;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    
-    header {
-      background-color: var(--primary-color);
-      background-image: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-      color: var(--white);
-      padding: 80px 0;
-      text-align: center;
-    }
-    
-    h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-    }
-    
-    .subtitle {
-      font-size: 1.5rem;
-      font-weight: 400;
-      margin-bottom: 2rem;
-      opacity: 0.9;
-    }
-    
-    .btn {
-      display: inline-block;
-      background-color: var(--white);
-      color: var(--primary-color);
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      margin: 0 10px;
-    }
-    
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--card-shadow);
-    }
-    
-    .btn-secondary {
-      background-color: transparent;
-      border: 2px solid var(--white);
-      color: var(--white);
-    }
-    
-    .section {
-      padding: 80px 0;
-    }
-    
-    .section-title {
-      text-align: center;
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 3rem;
-    }
-    
-    .section-subtitle {
-      text-align: center;
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin: 0 auto 4rem auto;
-      opacity: 0.8;
-    }
-    
-    .cards-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 30px;
-    }
-    
-    .card {
-      background-color: var(--white);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: var(--card-shadow);
-      transition: transform 0.3s ease;
-    }
-    
-    .card:hover {
-      transform: translateY(-10px);
-    }
-    
-    .card-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      background-color: var(--accent-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-size: 5rem;
-    }
-    
-    .card-content {
-      padding: 20px;
-    }
-    
-    .card-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    
-    .card-text {
-      opacity: 0.8;
-      margin-bottom: 15px;
-    }
-    
-    .card-link {
-      display: inline-block;
-      color: var(--primary-color);
-      font-weight: 600;
-      text-decoration: none;
-    }
-    
-    .cta-section {
-      background-color: var(--dark-bg);
-      color: var(--white);
-      text-align: center;
-      padding: 100px 0;
-    }
-    
-    .cta-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-    }
-    
-    .cta-text {
-      max-width: 600px;
-      margin: 0 auto 2rem auto;
-      font-size: 1.2rem;
-      opacity: 0.9;
-    }
-    
-    .about-section {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 40px;
-    }
-    
-    .about-content {
-      flex: 1;
-      min-width: 300px;
-    }
-    
-    .about-image {
-      flex: 1;
-      min-width: 300px;
-      height: 400px;
-      background-color: var(--accent-color);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 8rem;
-      color: var(--white);
-    }
-    
-    .timeline {
-      position: relative;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    
-    .timeline::before {
-      content: '';
-      position: absolute;
-      width: 4px;
-      background-color: var(--accent-color);
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      margin-left: -2px;
-    }
-    
-    .timeline-item {
-      padding: 10px 40px;
-      position: relative;
-      width: 50%;
-      margin-bottom: 30px;
-    }
-    
-    .timeline-item:nth-child(odd) {
-      left: 0;
-    }
-    
-    .timeline-item:nth-child(even) {
-      left: 50%;
-    }
-    
-    .timeline-item::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: var(--white);
-      border: 4px solid var(--primary-color);
-      border-radius: 50%;
-      top: 15px;
-      right: -12px;
-      z-index: 1;
-    }
-    
-    .timeline-item:nth-child(even)::after {
-      left: -12px;
-    }
-    
-    .timeline-content {
-      padding: 20px;
-      background-color: var(--white);
-      border-radius: 12px;
-      box-shadow: var(--card-shadow);
-    }
-    
-    .timeline-year {
-      color: var(--primary-color);
-      font-weight: 700;
-      margin-bottom: 5px;
-    }
-    
-    .faq-item {
-      margin-bottom: 20px;
-      background-color: var(--white);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: var(--card-shadow);
-    }
-    
-    .faq-question {
-      padding: 20px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .faq-question::after {
-      content: '+';
-      font-size: 1.5rem;
-    }
-    
-    .faq-answer {
-      padding: 0 20px 20px;
-      display: none;
-    }
-    
-    .faq-item.active .faq-answer {
-      display: block;
-    }
-    
-    .faq-item.active .faq-question::after {
-      content: '-';
-    }
-    
-    .testimonial-container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    
-    .testimonial {
-      background-color: var(--white);
-      border-radius: 12px;
-      padding: 30px;
-      margin-bottom: 30px;
-      box-shadow: var(--card-shadow);
-    }
-    
-    .testimonial-text {
-      font-style: italic;
-      margin-bottom: 20px;
-    }
-    
-    .testimonial-author {
-      display: flex;
-      align-items: center;
-    }
-    
-    .author-avatar {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background-color: var(--accent-color);
-      margin-right: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-weight: 700;
-    }
-    
-    .author-info h4 {
-      margin: 0;
-      font-weight: 600;
-    }
-    
-    .author-info p {
-      margin: 0;
-      opacity: 0.7;
-      font-size: 0.9rem;
-    }
-    
-    .contact-form {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    .form-group {
-      margin-bottom: 20px;
-    }
-    
-    .form-label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: 500;
-    }
-    
-    .form-input, .form-textarea {
-      width: 100%;
-      padding: 12px 15px;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      font-size: 1rem;
-    }
-    
-    .form-textarea {
-      height: 150px;
-      resize: vertical;
-    }
-    
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background-color: var(--white);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-      padding: 15px 0;
-    }
-    
-    .navbar-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--primary-color);
-      text-decoration: none;
-    }
-    
-    .nav-links {
-      display: flex;
-      list-style: none;
-    }
-    
-    .nav-link {
-      margin-left: 30px;
-      text-decoration: none;
-      color: var(--text-color);
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-    
-    .nav-link:hover {
-      color: var(--primary-color);
-    }
-    
-    .mobile-menu-btn {
-      display: none;
-      font-size: 1.5rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--text-color);
-    }
-    
-    .hero-section {
-      padding-top: 80px;
-    }
-    
-    footer {
-      background-color: var(--primary-color);
-      color: var(--white);
-      padding: 40px 0;
-      text-align: center;
-    }
-    
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-    
-    .footer-link {
-      color: var(--white);
-      margin: 0 15px;
-      text-decoration: none;
-      opacity: 0.8;
-      transition: opacity 0.3s ease;
-    }
-    
-    .footer-link:hover {
-      opacity: 1;
-    }
-    
-    .social-links {
-      display: flex;
-      justify-content: center;
-      margin: 20px 0;
-    }
-    
-    .social-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.1);
-      color: var(--white);
-      margin: 0 10px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-    
-    .social-link:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-    
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.5rem;
-      }
-      
-      .subtitle {
-        font-size: 1.2rem;
-      }
-      
-      .section-title {
-        font-size: 2rem;
-      }
-      
-      .cta-title {
-        font-size: 2rem;
-      }
-      
-      .timeline::before {
-        left: 30px;
-      }
-      
-      .timeline-item {
-        width: 100%;
-        padding-left: 70px;
-        padding-right: 20px;
-      }
-      
-      .timeline-item:nth-child(even) {
-        left: 0;
-      }
-      
-      .timeline-item::after {
-        left: 20px;
-        right: auto;
-      }
-      
-      .mobile-menu-btn {
-        display: block;
-      }
-      
-      .nav-links {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: var(--white);
-        flex-direction: column;
-        padding: 20px;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        display: none;
-      }
-      
-      .nav-links.active {
-        display: flex;
-      }
-      
-      .nav-link {
-        margin: 10px 0;
-      }
-      
-      .subscribe-form {
-        flex-direction: column;
-      }
-      
-      .subscribe-input {
-        border-radius: 8px;
-        margin-bottom: 10px;
-      }
-      
-      .subscribe-btn {
-        border-radius: 8px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlos Luengo Vera - Portfolio Profesional</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --dark-bg: #343a40;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            transition: background-color 0.3s ease;
+        }
+        
+        .dark-mode {
+            --text-color: #f8f9fa;
+            --light-bg: #212529;
+            --dark-bg: #121416;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+        }
+        
+        .dark-mode .card {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+        }
+        
+        .dark-mode .navbar {
+            background-color: var(--dark-bg) !important;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+        }
+        
+        .profile-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid white;
+        }
+        
+        .section-title {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .experience-item {
+            margin-bottom: 2rem;
+        }
+        
+        .experience-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .experience-company {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .experience-period {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .experience-description {
+            margin-left: 1rem;
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .skill-tag {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .education-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .theme-toggle {
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        
+        .achievements-list li {
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .nav-item .nav-link {
+            position: relative;
+        }
+        
+        .nav-item .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-item .nav-link:hover::after,
+        .nav-item .active::after {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-  <nav class="navbar">
-    <div class="container navbar-container">
-      <a href="#" class="logo">IA Educativa</a>
-      <button class="mobile-menu-btn">☰</button>
-      <ul class="nav-links">
-        <li><a href="#inicio" class="nav-link">Inicio</a></li>
-        <li><a href="#sobre-nosotros" class="nav-link">Sobre Nosotros</a></li>
-        <li><a href="#casos-uso" class="nav-link">Casos de Uso</a></li>
-        <li><a href="#recursos" class="nav-link">Recursos</a></li>
-        <li><a href="#testimonios" class="nav-link">Testimonios</a></li>
-        <li><a href="#faq" class="nav-link">FAQ</a></li>
-        <li><a href="#contacto" class="nav-link">Contacto</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <header id="inicio" class="hero-section">
-    <div class="container">
-      <h1>IA Generativa en Educación</h1>
-      <p class="subtitle">Transformando el aprendizaje con inteligencia artificial</p>
-      <div>
-        <a href="#casos-uso" class="btn">Ver casos de uso</a>
-        <a href="#recursos" class="btn btn-secondary">Recursos</a>
-      </div>
-    </div>
-  </header>
-
-  <section id="sobre-nosotros" class="section">
-    <div class="container">
-      <h2 class="section-title">Sobre la IA Generativa en Educación</h2>
-      <div class="about-section">
-        <div class="about-content">
-          <p>La Inteligencia Artificial Generativa está revolucionando el sector educativo, ofreciendo nuevas oportunidades para personalizar el aprendizaje, automatizar tareas administrativas y crear experiencias educativas más atractivas e interactivas.</p>
-          <p>Esta tecnología permite a docentes, estudiantes e instituciones educativas acceder a herramientas que antes eran inimaginables, como tutores virtuales disponibles 24/7, contenido adaptativo que responde a las necesidades individuales de cada estudiante, y sistemas capaces de proporcionar retroalimentación instantánea y detallada.</p>
-          <p>Desde la educación primaria hasta la formación profesional y universitaria, la IA generativa está cambiando fundamentalmente la forma en que enseñamos y aprendemos, democratizando el acceso a educación de calidad y preparando a los estudiantes para un futuro donde la colaboración con sistemas inteligentes será parte del día a día.</p>
-        </div>
-        <div class="about-image">
-          🧠
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" style="background-color: #f3f4f6;">
-    <div class="container">
-      <h2 class="section-title">Evolución de la IA en Educación</h2>
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-content">
-            <div class="timeline-year">2010</div>
-            <h3>Primeros tutores adaptativos</h3>
-            <p>Sistemas básicos de recomendación de contenido educativo basados en el desempeño del estudiante.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-content">
-            <div class="timeline-year">2015</div>
-            <h3>Aprendizaje automático en educación</h3>
-            <p>Integración de algoritmos de machine learning para analizar patrones de aprendizaje y predecir áreas de dificultad.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-content">
-            <div class="timeline-year">2020</div>
-            <h3>GPT-3 y modelos de lenguaje avanzados</h3>
-            <p>Surgimiento de modelos capaces de generar contenido educativo coherente y contextualmente relevante.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-content">
-            <div class="timeline-year">2023</div>
-            <h3>Asistentes IA multimodales</h3>
-            <p>Sistemas educativos que combinan comprensión de texto, imágenes y voz para crear experiencias de aprendizaje inmersivas.</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-content">
-            <div class="timeline-year">2025</div>
-            <h3>Personalización total del aprendizaje</h3>
-            <p>Ecosistemas educativos inteligentes que adaptan completamente el contenido, ritmo y metodología a cada estudiante.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="casos-uso" class="section">
-    <div class="container">
-      <h2 class="section-title">Casos de Uso</h2>
-      <p class="section-subtitle">Descubre cómo la IA Generativa está revolucionando la educación en diferentes contextos</p>
-      <div class="cards-container">
-        <div class="card">
-          <div class="card-img">
-            <i>📝</i>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Creación de materiales didácticos</h3>
-            <p class="card-text">Genera recursos educativos personalizados, adaptados a diferentes estilos de aprendizaje y niveles de conocimiento. Incluye ejercicios, evaluaciones y material complementario.</p>
-            <a href="caso-materiales.html" class="card-link">Leer más →</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-img">
-            <i>🤖</i>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Tutores virtuales personalizados</h3>
-            <p class="card-text">Asistentes de aprendizaje impulsados por IA que ofrecen apoyo 24/7, adaptándose al ritmo y necesidades individuales de cada estudiante.</p>
-            <a href="caso-tutores.html" class="card-link">Leer más →</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-img">
-            <i>🔍</i>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Retroalimentación automática</h3>
-            <p class="card-text">Evaluación y comentarios instantáneos sobre trabajos escritos, presentaciones y proyectos, permitiendo a los estudiantes mejorar continuamente.</p>
-            <a href="caso-retroalimentacion.html" class="card-link">Leer más →</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-img">
-            <i>🎮</i>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Gamificación adaptativa</h3>
-            <p class="card-text">Creación de experiencias de aprendizaje gamificadas que se adaptan en tiempo real al desempeño y motivación del estudiante.</p>
-            <a href="caso-gamificacion.html" class="card-link">Leer más →</a>
-          </div>
-        </div>
-        <!-- Nuevos casos de uso -->
-        <div class="card">
-          <div class="card-img">
-            <i>🎨</i>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Generación de contenidos multimedia</h3>
-            <p class="card-text">Crea videos, imágenes y presentaciones interactivas que enriquecen el aprendizaje y hacen las clases más dinámicas.</p>
-            <a href="caso-multimedia.html" class="card-link">Leer más →</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-img">
-            <i>💬</i>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Chatbots de soporte estudiantil</h3>
-            <p class="card-text">Implementa asistentes virtuales que responden consultas, orientan a estudiantes y facilitan la comunicación en tiempo real.</p>
-            <a href="caso-chatbots.html" class="card-link">Leer más →</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-img">
-            <i>🌍</i>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Traducción y localización de contenidos</h3>
-            <p class="card-text">Automatiza la traducción de materiales educativos y adapta el contenido a contextos culturales diversos para un aprendizaje globalizado.</p>
-            <a href="caso-traduccion.html" class="card-link">Leer más →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="recursos" class="section" style="background-color: #f3f4f6;">
-    <div class="container">
-      <h2 class="section-title">Recursos y Herramientas</h2>
-      <p class="section-subtitle">Explora estas herramientas de IA Generativa diseñadas específicamente para el ámbito educativo</p>
-      <div class="cards-container">
-        <div class="card">
-          <div class="card-img">
-            <i>🧠</i>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Asistentes IA para docentes</h3>
-            <p class="card-text">Herramientas que ayudan a los profesores a planificar lecciones, crear evaluaciones y generar material didáctico adaptado a sus necesidades.</p>
-            <a href="recursos-docentes.html" class="card-link">Explorar →</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-img">
-            <i>📚</i>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Plataformas de aprendizaje online</h3>
-            <p class="card-text">Soluciones que facilitan la gestión de cursos, la interacción virtual y el acceso a contenidos educativos de calidad.</p>
-            <a href="recursos-plataformas.html" class="card-link">Explorar →</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-img">
-            <i>📈</i>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Analítica educativa</h3>
-            <p class="card-text">Herramientas que ofrecen seguimiento y análisis del rendimiento estudiantil para optimizar estrategias de enseñanza.</p>
-            <a href="recursos-analitica.html" class="card-link">Explorar →</a>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-img">
-            <i>💻</i>
-          </div>
-          <div class="card-content">
-            <h3 class="card-title">Contenidos interactivos</h3>
-            <p class="card-text">Plataformas que permiten crear y gestionar recursos educativos interactivos y adaptativos para un aprendizaje dinámico.</p>
-            <a href="recursos-interactivos.html" class="card-link">Explorar →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="testimonios" class="section">
-    <div class="container">
-      <h2 class="section-title">Testimonios</h2>
-      <p class="section-subtitle">Lo que dicen nuestros usuarios sobre la integración de la IA en la educación</p>
-      <div class="testimonial-container">
-        <div class="testimonial">
-          <p class="testimonial-text">"Gracias a la implementación de estas herramientas, mi aula se ha transformado. La personalización del aprendizaje ha incrementado el interés de mis estudiantes."</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">👩‍🏫</div>
-            <div class="author-info">
-              <h4>Profesora Laura Gómez</h4>
-              <p>Instituto Innovar</p>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">Carlos Luengo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">CV</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/publicaciones.html">Publicaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/ia-k12.html">IA en K-12</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/ia-universidad.html">IA en Universidad</a>
+                    </li>
+                </ul>
             </div>
-          </div>
         </div>
-        <div class="testimonial">
-          <p class="testimonial-text">"La IA generativa nos ha permitido ofrecer una experiencia educativa única. Los resultados en la participación y desempeño de los alumnos son notables."</p>
-          <div class="testimonial-author">
-            <div class="author-avatar">👨‍🎓</div>
-            <div class="author-info">
-              <h4>Estudiante Miguel Sánchez</h4>
-              <p>Universidad Digital</p>
+    </nav>
+
+    <!-- Header -->
+    <header class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-9">
+                    <h1 class="display-4 fw-bold">Carlos Luengo Vera</h1>
+                    <p class="lead">Senior Account Executive con especialización en IA y soluciones cloud</p>
+                    <div class="d-flex mt-3">
+                        <div class="me-4">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            <span>Madrid, 28034</span>
+                        </div>
+                        <div class="me-4">
+                            <i class="fas fa-envelope me-2"></i>
+                            <a href=""class="text-white"></a>
+                        </div>
+                        <div>
+                            <i class="fas fa-phone me-2"></i>
+                            <a href="" class="text-white"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 text-center text-md-end mt-4 mt-md-0">
+                    <img src="/api/placeholder/150/150" alt="Foto de perfil" class="profile-image">
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <section id="faq" class="section">
-    <div class="container">
-      <h2 class="section-title">Preguntas Frecuentes</h2>
-      <div class="faq-item">
-        <div class="faq-question">¿Qué es la IA Generativa en Educación?</div>
-        <div class="faq-answer">
-          <p>Es la aplicación de algoritmos de inteligencia artificial para crear contenido educativo personalizado, adaptativo y dinámico.</p>
+    <!-- Main Content -->
+    <main class="container py-5">
+        <!-- Experiencia Profesional -->
+        <section class="mb-5">
+            <h2 class="section-title">Experiencia Profesional</h2>
+            
+            <!-- Amazon -->
+            <div class="experience-item">
+                <div class="experience-title">
+                    <div class="experience-company">Amazon Web Services</div>
+                    <div class="experience-period">08/2022 - Presente</div>
+                </div>
+                <div class="experience-role">Sr Account Executive | Madrid, España & SP, Brasil</div>
+                <ul class="experience-description mt-2">
+                    <li>Desarrollé un framework de IA para asistir a 15 editoriales, abarcando el 95% del mercado en España, reduciendo costos de producción en un 65%.</li>
+                    <li>Lideré a clientes empresariales en la adopción de soluciones de IA Generativa, impulsando el crecimiento de ventas.</li>
+                    <li>Encabecé la AWS Skills to Jobs Tech Alliance en España, mejorando la competencia laboral en IA y colaborando con instituciones educativas.</li>
+                    <li>FY22: 110% (32% de crecimiento) FY23: 111% (39% de crecimiento) FY24: 108% YTD (45% de crecimiento)</li>
+                </ul>
+            </div>
+            
+            <!-- Lenovo -->
+            <div class="experience-item">
+                <div class="experience-title">
+                    <div class="experience-company">Lenovo</div>
+                    <div class="experience-period">01/2022 - 08/2022</div>
+                </div>
+                <div class="experience-role">Sr Partner Sales Manager | Madrid, España</div>
+                <ul class="experience-description mt-2">
+                    <li>Gestioné estratégicamente relaciones con socios para impulsar el crecimiento de soluciones de datacenter.</li>
+                    <li>Desarrollé y ejecuté estrategias de ventas de alto impacto, impulsando un crecimiento del 175% en los ingresos en el FY22.</li>
+                </ul>
+            </div>
+            
+            <!-- Telefónica -->
+            <div class="experience-item">
+                <div class="experience-title">
+                    <div class="experience-company">Telefónica</div>
+                    <div class="experience-period">08/2018 - 01/2022</div>
+                </div>
+                <div class="experience-role">Sr Manager – Global Innovation | Madrid, España</div>
+                <ul class="experience-description mt-2">
+                    <li>Diseñé soluciones de conectividad para el 10% de los clientes alemanes, impulsando la innovación en pilotos de IA para mejorar la adopción tecnológica.</li>
+                    <li>Tokenicé el valor de datos con un lanzamiento posterior en España y Chile, pionero en estrategias de monetización de datos.</li>
+                    <li>Dirigí iniciativas de innovación global, liderando proyectos de transformación digital.</li>
+                    <li>Fomentó alianzas estratégicas y promovió una cultura de innovación.</li>
+                    <li>Responsabilidades directas: Proyectos de IA, proyectos Blockchain y proyectos de Datos.</li>
+                </ul>
+            </div>
+            
+            <!-- Insight -->
+            <div class="experience-item">
+                <div class="experience-title">
+                    <div class="experience-company">Insight</div>
+                    <div class="experience-period">05/2015 - 08/2018</div>
+                </div>
+                <div class="experience-role">Cloud Solution Sales Specialist | Madrid, España</div>
+                <ul class="experience-description mt-2">
+                    <li>Diseñé y entregué soluciones cloud escalables, mejorando la eficiencia operativa.</li>
+                    <li>Asesoré a clientes sobre transformación digital y optimización tecnológica.</li>
+                </ul>
+            </div>
+            
+            <!-- Microsoft -->
+            <div class="experience-item">
+                <div class="experience-title">
+                    <div class="experience-company">Microsoft</div>
+                    <div class="experience-period">09/2010 - 05/2015</div>
+                </div>
+                <div class="experience-role">IT Pro – Evangelism Team | Madrid, España</div>
+                <ul class="experience-description mt-2">
+                    <li>Fusioné experiencia técnica con estrategias de marketing para impulsar campañas de TI impactantes.</li>
+                    <li>Me enfoqué en las necesidades de los usuarios para entregar soluciones tecnológicas personalizadas.</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Liderazgo y Actividades -->
+        <section class="mb-5">
+            <h2 class="section-title">Liderazgo y Actividades</h2>
+            
+            <div class="experience-item">
+                <div class="experience-title">
+                    <div class="experience-company">Clúster de Humanidades Digitales y Tecnologías del Español</div>
+                    <div class="experience-period">12/2023 - Presente</div>
+                </div>
+                <div class="experience-role">Asesor | Madrid, España</div>
+                <ul class="experience-description mt-2">
+                    <li>Facilité asociaciones entre el clúster y organismos gubernamentales para promover el uso de tecnologías avanzadas en el sector de las humanidades.</li>
+                    <li>Proporcioné orientación experta sobre la integración de humanidades digitales en políticas públicas y la optimización de tecnología para proyectos educativos y culturales.</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Educación -->
+        <section class="mb-5">
+            <h2 class="section-title">Educación</h2>
+            
+            <div class="education-item">
+                <div class="experience-title">
+                    <div class="experience-company">Universidad de Alcalá</div>
+                    <div class="experience-period">Esperado 2027</div>
+                </div>
+                <div>PhD (EQF 8), Economía e Inteligencia Artificial | Madrid, España</div>
+            </div>
+            
+            <div class="education-item">
+                <div class="experience-title">
+                    <div class="experience-company">Universidad de Alcalá</div>
+                    <div class="experience-period">2020</div>
+                </div>
+                <div>Master (EQF 7), Gestión de Proyectos Tecnológicos | Madrid, España</div>
+            </div>
+            
+            <div class="education-item">
+                <div class="experience-title">
+                    <div class="experience-company">Universidad de Alcalá</div>
+                    <div class="experience-period">2018</div>
+                </div>
+                <div>Grado de Ingeniería (EQF 6), Ciencias de la Computación e Información | Madrid, España</div>
+            </div>
+        </section>
+        
+        <!-- Habilidades e Intereses -->
+        <section class="mb-5">
+            <h2 class="section-title">Habilidades e Intereses</h2>
+            
+            <div class="mb-4">
+                <h5>Técnicas:</h5>
+                <div class="skills-container">
+                    <span class="skill-tag">Inteligencia Artificial</span>
+                    <span class="skill-tag">Cloud (Azure & AWS)</span>
+                    <span class="skill-tag">Workplace (Apple, M365)</span>
+                    <span class="skill-tag">OpenAI</span>
+                    <span class="skill-tag">Anthropic</span>
+                    <span class="skill-tag">Perplexity</span>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <h5>Idiomas:</h5>
+                <div class="skills-container">
+                    <span class="skill-tag">Español (Nativo)</span>
+                    <span class="skill-tag">Inglés (Avanzado)</span>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <h5>Laboratorio:</h5>
+                <div class="skills-container">
+                    <span class="skill-tag">A2R AI Framework</span>
+                    <span class="skill-tag">Lecture AI Framework</span>
+                    <span class="skill-tag">MIR assisted by AI</span>
+                    <span class="skill-tag">PartyRock hackathon</span>
+                </div>
+            </div>
+            
+            <div>
+                <h5>Intereses:</h5>
+                <div class="skills-container">
+                    <span class="skill-tag">Tecnología</span>
+                    <span class="skill-tag">Educación</span>
+                    <span class="skill-tag">Investigación</span>
+                    <span class="skill-tag">Economía</span>
+                    <span class="skill-tag">STEAM</span>
+                    <span class="skill-tag">Telecomunicaciones</span>
+                    <span class="skill-tag">Gestión</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Contacto</h4>
+                    <p><i class="fas fa-envelope me-2"></i> carlos.luengo@outlook.com</p>
+                    <p><i class="fas fa-phone me-2"></i> +34627445234</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h4>Enlaces</h4>
+                    <p><a href="#" class="text-white"><i class="fab fa-linkedin me-2"></i>LinkedIn</a></p>
+                    <p><a href="assets/docs/cv.pdf" class="text-white"><i class="fas fa-file-pdf me-2"></i>Descargar CV</a></p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <p>&copy; 2025 Carlos Luengo Vera. Todos los derechos reservados.</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question">¿Cómo puede ayudar la IA a los docentes?</div>
-        <div class="faq-answer">
-          <p>La IA puede automatizar tareas administrativas, proporcionar retroalimentación instantánea y ayudar en la creación de recursos didácticos.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-question">¿Es segura la implementación de estas tecnologías en el aula?</div>
-        <div class="faq-answer">
-          <p>Sí, siempre y cuando se implementen con protocolos de seguridad adecuados y se protejan los datos de los estudiantes.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <section id="contacto" class="section">
-    <div class="container">
-      <h2 class="section-title">Contacto</h2>
-      <p class="section-subtitle">¿Tienes alguna pregunta o deseas más información? Contáctanos y te responderemos a la brevedad.</p>
-      <div class="contact-form">
-        <form>
-          <div class="form-group">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" id="nombre" class="form-input" placeholder="Tu nombre">
-          </div>
-          <div class="form-group">
-            <label for="email" class="form-label">Correo Electrónico</label>
-            <input type="email" id="email" class="form-input" placeholder="Tu correo">
-          </div>
-          <div class="form-group">
-            <label for="mensaje" class="form-label">Mensaje</label>
-            <textarea id="mensaje" class="form-textarea" placeholder="Escribe tu mensaje"></textarea>
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn">Enviar Mensaje</button>
-          </div>
-        </form>
-      </div>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
     </div>
-  </section>
 
-  <footer>
-    <div class="container">
-      <div class="footer-links">
-        <a href="#inicio" class="footer-link">Inicio</a>
-        <a href="#sobre-nosotros" class="footer-link">Sobre Nosotros</a>
-        <a href="#casos-uso" class="footer-link">Casos de Uso</a>
-        <a href="#recursos" class="footer-link">Recursos</a>
-        <a href="#testimonios" class="footer-link">Testimonios</a>
-        <a href="#faq" class="footer-link">FAQ</a>
-        <a href="#contacto" class="footer-link">Contacto</a>
-      </div>
-      <div class="social-links">
-        <a href="#" class="social-link">🌐</a>
-        <a href="#" class="social-link">🐦</a>
-        <a href="#" class="social-link">📘</a>
-      </div>
-      <p class="copyright">© 2025 IA Educativa. Todos los derechos reservados.</p>
-    </div>
-  </footer>
-
-  <script>
-    // Toggle menú móvil
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const navLinks = document.querySelector('.nav-links');
-    mobileMenuBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
-    
-    // Toggle FAQ
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-      const question = item.querySelector('.faq-question');
-      question.addEventListener('click', () => {
-        item.classList.toggle('active');
-      });
-    });
-  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+    </script>
 </body>
 </html>
